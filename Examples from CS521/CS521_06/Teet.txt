@@ -1,0 +1,5 @@
+                 PLAYER NAME :         AVERAGE          OPS
+------------------------------------------------------------
+------------------------------------------------------------
+BASEBALL TEAM REPORT:     0 players found in file
+OVERALL BATTING AVERAGE:  nan
