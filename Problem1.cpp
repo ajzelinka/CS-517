@@ -1,48 +1,67 @@
+/*
+Name: Andrew Zelinka
+File Name: Problem1.cpp
+Due Date: April 29, 2025
+Course: CS 517 - Computing Theory
+Environment: VSCode Windows
 
+Description: This program will prompt the user to input the name of a
+text file to read from. This text file should be in the same directory
+that the program is called from and should contain a series of arrays
+-- one per line -- with sorted, space-separated integer values. The
+program will read the input text file and output one line per array,
+which will either be the integer value of the "magic index" of that
+array or "None" if no magic index was found.
+*/
 
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <sstream>
 
-// Pseudocode
-// Algorithm MagicIndex(A[0..n-1])
-// Inputs: array A of size n to be analyzed
-// Outputs: integer j, representing the magic index, or -1 if none found
-//  j <- 0
-//  while j<=n-1 do
-//      else if A[j]=j
-//          return j
-//      else if A[j]<j
-//          j <- j + 1
-//      else
-//          j <- A[j]
-//  return -1
-
 int main() {
-
+    int i = 0;
     int j = 0;
     int temporaryValue;
-
+    
+    bool found = false;
     std::string temporaryString;
-    std::string noMagicIndex = "None";
-    std::ifstream inFile("inputFile.txt");
-    std::string arrayAString = "-10 -5 0 3 7";
-    std::stringstream ss;
-    int  arrayA[100];
+    std::string inFileString;
+    std::ifstream inFile;
+    std::string arrayAString;
 
-    // while (inFile.good() && !inFile.eof()) {
-        ss.str (arrayAString);    
+    std::cout << "Input file name: ";
+    std::cin >> inFileString;
+    std::cout << "Thank you. The magic indices in the file provided are as follows:\n";
 
-        while (j < 99) {
-            ss >> temporaryString;
-            arrayA[j] = std::stoi (temporaryString);
+    if (inFileString[inFileString.size() - 4] != '.') inFileString += ".txt";
+
+    inFile.open(inFileString);
+
+    while (inFile.good() && !inFile.eof()) {
+        
+        // Read next line and initialize stringstream for it
+        std::getline(inFile, arrayAString);
+        std::stringstream ss(arrayAString);    
+
+        // Iterate over stringstream to find magic index
+        while (ss >> temporaryValue) {
+            // If magic index found, flag it, print it, and break loop
+            if (temporaryValue == j) {
+                found = true; std::cout << j; break;
+            }
             j++;
         }
 
-        for (int i = 0; i <= j; i++) {
-            std::cout << arrayA[i] << "\n";
-        }
+        // Print 'none' if none found
+        if (!found) { std::cout << "None"; }
+        std::cout << std::endl;
 
-    // }
+        found = false;
+        i = 0;
+        j = 0;
+        
+    }
+
+    inFile.close();
 }
